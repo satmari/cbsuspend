@@ -39,6 +39,7 @@ class CreateCbSuspendsTable extends Migration {
 			$table->dateTime('unblock_date')->nullable();
 
 			$table->string('coment', 64)->nullable();
+			$table->string('reason', 64)->nullable();
 
 			$table->timestamps();
 		});

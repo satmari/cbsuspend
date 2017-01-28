@@ -5,9 +5,10 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
-				
+				@if(Auth::check())
 				<a href="{{ url('/add_new_palet') }}" class="btn btn-info btn-s">Add new palet</a>
 				<a href="{{ url('/add_palet_location') }}" class="btn btn-success btn-s">Change location of palet</a>
+				@endif
 				<br>
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">

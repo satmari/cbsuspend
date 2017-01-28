@@ -54,6 +54,7 @@
 				           <th>Block date</th>
 				           <th>Unblock date</th>
 				           <th>Comment</th>
+				           <th>Reason</th>
 				           <!-- <th></th> -->
 
 				        </tr>
@@ -85,6 +86,7 @@
 				        	{{--<td>{{ Carbon\Carbon::parse($d->block_date)}}</td> --}}
 				        	<td>{{ substr($d->unblock_date, 0, 19) }} </td>
 				        	<td>{{ $d->coment }} </td>
+				        	<td>{{ $d->reason }} </td>
 
 						</tr>
 				    

@@ -5,8 +5,9 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
-				
+				@if(Auth::check())
 				<a href="{{ url('/add_new_sticker') }}" class="btn btn-info btn-s">Add new sticker type</a>
+				@endif
 				<br>
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
@@ -56,8 +57,9 @@
 				        	<td>{{ $d->sticker }}</td>
 				        	<td>{{ $d->sticker_desc }}</td>
 				        	<td><span style="color:{{ $d->sticker_color}}">This color </span></td>
-
+				        	@if(Auth::check())
 				        	<td><a href="{{ url('/sticker/'.$d->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+				        	@endif
 				        	{{-- <td><a href="{{ url('/sticker/remove/'.$d->id) }}" class="btn btn-danger btn-xs center-block">Remove</a></td> --}}
 				        	
 						</tr>

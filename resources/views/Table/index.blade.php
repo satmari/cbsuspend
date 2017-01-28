@@ -55,6 +55,7 @@
 				           <th>Block date</th>
 				           <th>Unblock date</th>
 				           <th>Comment</th>
+				           <th>Reason</th>
 				           <th></th>
 
 				        </tr>
@@ -87,8 +88,10 @@
 				        	{{--<td>{{ Carbon\Carbon::parse($d->block_date)}}</td> --}}
 				        	<td>{{ substr($d->unblock_date, 0, 19) }} </td>
 				        	<td>{{ $d->coment }} </td>
-				        	<td><a href="{{ url('edit_coment/'.$d->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
-
+				        	<td>{{ $d->reason }} </td>
+				        	@if(Auth::check())
+				        	  	<td><a href="{{ url('edit_coment/'.$d->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+				        	@endif
 						</tr>
 				    
 				    @endforeach

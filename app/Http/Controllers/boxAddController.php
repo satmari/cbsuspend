@@ -27,6 +27,7 @@ class boxAddController extends Controller {
 		Session::set('sticker_array', null);
 		Session::set('location', null);
 		Session::set('coment', null);
+		Session::set('reason', null);
 
 		if ($cb_to_add_array != NULL) {
 
@@ -140,6 +141,7 @@ class boxAddController extends Controller {
       			$block_date;
       			$unblock_date;
       			$coment;
+      			$reason;
 
       			// Nav
 
@@ -289,9 +291,11 @@ class boxAddController extends Controller {
 		//var_dump($input);
 	
 		$coment = $input['coment'];
+		$reason = $input['reason'];
 		// dd($coment);
 
 		Session::set('coment',$coment);
+		Session::set('reason',$reason);
 
 		return Redirect::to('/addlist');	
 	}
@@ -306,6 +310,7 @@ class boxAddController extends Controller {
 		$palet_id = Session::get('palet');
 		// dd($palet);
 		$coment = Session::get('coment');
+		$reason = Session::get('reason');
 		// var_dump($coment);
 
 
@@ -362,6 +367,7 @@ class boxAddController extends Controller {
 				$table->palet_id = $palet_id;
 
 				$table->coment = $coment;
+				$table->reason = $reason;
 
 				$table->status = $status;
 				$table->block_date = date("Y-m-d H:i:s");
@@ -378,6 +384,7 @@ class boxAddController extends Controller {
 		Session::set('sticker_array', null);
 		Session::set('palet', null);
 		Session::set('coment', null);
+		Session::set('reason', null);
 
 		if ($msg != "") {
 

@@ -75,7 +75,6 @@ class boxTableController extends Controller {
 				$msg = "Problem to change coment in table";
 				return view('Table.error',compact('msg'));
 			}
-			return Redirect::to('/');
 			
 		} else {
 
@@ -89,8 +88,38 @@ class boxTableController extends Controller {
 				$msg = "Problem to change coment in table";
 				return view('Table.error',compact('msg'));
 			}
-			return Redirect::to('/');
+			
 		}
+
+		if (isset($input['newreason'])) {
+			
+			$table = cbSuspend::findOrFail($id);
+		
+			try {		
+				$table->reason = $input['newreason'];
+				$table->save();
+			}
+			catch (\Illuminate\Database\QueryException $e) {
+				$msg = "Problem to change reson in table";
+				return view('Table.error',compact('msg'));
+			}
+			
+		} else {
+
+			$table = cbSuspend::findOrFail($id);
+		
+			try {		
+				$table->reason = "";
+				$table->save();
+			}
+			catch (\Illuminate\Database\QueryException $e) {
+				$msg = "Problem to change reason in table";
+				return view('Table.error',compact('msg'));
+			}
+			
+		}
+
+		return Redirect::to('/');
 		
 	}
 
