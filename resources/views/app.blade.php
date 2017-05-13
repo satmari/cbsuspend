@@ -52,6 +52,8 @@
 
 						</ul>
 					</li>
+					
+					@if(Auth::check())
 
 					<li>
 						 <button class="btn btn-default dropdown-toggle" style="margin: 8px 5px !important;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -72,15 +74,17 @@
 						</ul>
 					</li>
 
+					@endif
+
 					<li><a href="{{ url('compare') }}">Compare</a></li>
 					<li><a href="{{ url('compare_p') }}">Compare (only problematic)</a></li>
 				
 				</ul>
-				{{-- 
+				
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Register</a></li>
+						{{--<li><a href="{{ url('/auth/register') }}">Register</a></li>--}}
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
@@ -90,7 +94,7 @@
 						</li>
 					@endif
 				</ul>
-				--}}
+				
 			</div>
 		</div>
 	</nav>

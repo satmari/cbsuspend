@@ -28,7 +28,7 @@ class compareController extends Controller {
 		foreach ($cb_suspend as $box) {
 			
 			// dd($box->cartonbox);
-			$compare = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Box Barcode] as box, [Pallet Number] as palet
+			$compare = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Box Barcode] as box, [Pallet Number] as palet, [Shipment posted] as posted 
 				  FROM [Gordon_LIVE].[dbo].[GORDON\$Box Scanning]
 				  WHERE [Marked For Shipment] = 0 AND [Pallet Number] != '1'
 				  AND [Box Barcode] = '".$box->cartonbox."'"));
@@ -48,12 +48,18 @@ class compareController extends Controller {
 				$sticker_color = $box->sticker_color;
 				$palet = $compare[0]->palet;
 				$sku = $box->style." ".$box->color."-".$box->size;
+				if ($compare[0]->posted == 0) {
+					$posted = "NO";
+				} else {
+					$posted = "YES";
+				}
 
 				$compare_array = array(
 					'cartonbox' => $boxy,
 					'sticker' => $sticker,
 					'sticker_color' => $sticker_color,
 					'palet' => $palet,
+					'posted' => $posted,
 					'sku' => $sku,
 					'shipment' => "YES");
 
@@ -76,6 +82,7 @@ class compareController extends Controller {
 					'sticker' => $sticker,
 					'sticker_color' => $sticker_color,
 					'palet' => "",
+					'posted' => "",
 					'sku' => $sku,
 					'shipment' => "NO");
 
@@ -100,7 +107,7 @@ class compareController extends Controller {
 		foreach ($cb_suspend as $box) {
 			
 			// dd($box->cartonbox);
-			$compare = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Box Barcode] as box, [Pallet Number] as palet
+			$compare = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Box Barcode] as box, [Pallet Number] as palet, [Shipment posted] as posted
 				  FROM [Gordon_LIVE].[dbo].[GORDON\$Box Scanning]
 				  WHERE [Marked For Shipment] = 0 AND [Pallet Number] != '1'
 				  AND [Box Barcode] = '".$box->cartonbox."'"));
@@ -120,12 +127,19 @@ class compareController extends Controller {
 				$sticker_color = $box->sticker_color;
 				$palet = $compare[0]->palet;
 				$sku = $box->style." ".$box->color."-".$box->size;
+				if ($compare[0]->posted == 0) {
+					$posted = "NO";
+				} else {
+					$posted = "YES";
+				}
 
 				$compare_array = array(
 					'cartonbox' => $boxy,
 					'sticker' => $sticker,
 					'sticker_color' => $sticker_color,
 					'palet' => $palet,
+					'posted' => "",
+					'posted' => $posted,
 					'sku' => $sku,
 					'shipment' => "YES");
 

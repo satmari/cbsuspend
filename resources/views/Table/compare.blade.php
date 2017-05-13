@@ -41,7 +41,8 @@
 				           <th>Cartonbox</th>
 				           <th>SKU</th>
 				           <th>Sticker</th>
-				           <th>Box on Shipment <span style="color: #b3b3b3;font-weight: normal;font: 5px;font-style: italic;">("Palet" <> 1 AND "Mark for shipment" = NO)</span></th>
+				           <th>Box on Shipment <p><span style="color: #b3b3b3;font-weight: normal;font: 5px;font-style: italic;">("Palet" <> 1 AND "Mark for shipment" = NO)</span></p></th>
+				           <th>Box shiped</th>
 				           <th>Palet in Nav</th>
 				           
 				        </tr>
@@ -60,6 +61,7 @@
 							@else
 							<td><span style="color:green !important;font-weight: bold">{{ $box['shipment'] }}</span></td>
 				        	@endif
+				        	<td>{{ $box['posted'] }}</td>
 				        	<td>{{ $box['palet'] }}</td>
 				        	
 

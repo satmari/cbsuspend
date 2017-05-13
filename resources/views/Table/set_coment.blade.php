@@ -16,6 +16,12 @@
 					<p>Comment:</p>
 						{!! Form::input('string', 'newcoment', $data->coment, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
 					</div>
+
+					<div class="panel-body">
+					<p>Reason:</p>
+						{{-- {!! Form::input('string', 'newreason', $data->reason, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!} --}}
+						{!! Form::select('newreason', array(''=>'','first cartoon box'=>'first cartoon box','shading color'=>'shading color','measurement out of tollerance'=>'measurement out of tollerance','contamination/fabric problem'=>'contamination/fabric problem','twisted (leg, sleeve...)'=>'twisted (leg, sleeve...)','different thread color'=>'different thread color'), $data->reason, array('class' => 'form-control')); !!} 
+					</div>
 						
 					<div class="panel-body">
 						{!! Form::submit('Save', ['class' => 'btn btn-success center-block']) !!}

@@ -37,6 +37,7 @@ class HomeController extends Controller {
 		Session::set('sticker_array', null);
 		Session::set('location', null);
 		Session::set('coment', null);
+		Session::set('reason', null);
 		return view('home');
 	}
 
