@@ -73,13 +73,15 @@ class boxAddController extends Controller {
 				po.POClosed,
 				st.StyCod,
 				sku.Variant,
-				sku.ClrDesc
+				sku.ClrDesc,
+				m.ModNam
 
 				FROM            dbo.CNF_CartonBox AS cb 
 				LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
 				LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
 				LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
 				LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
+				LEFT OUTER JOIN dbo.CNF_Modules AS m ON cb.Module = m.Module
 				
 				WHERE			cb.BoxNum = :somevariable
 
@@ -91,7 +93,8 @@ class boxAddController extends Controller {
 								po.POClosed,
 								st.StyCod,
 								sku.Variant,
-								sku.ClrDesc"
+								sku.ClrDesc,
+								m.ModNam"
 				), array(
 					'somevariable' => $cbcode
 			));
@@ -132,6 +135,8 @@ class boxAddController extends Controller {
 		    	$qty = $inteos_array[0]['Produced'];
 		    	$standard_qty = $inteos_array[0]['BoxQuant']; // ?
 
+		    	$module = $inteos_array[0]['ModNam'];
+
 		    	list($color, $size) = explode('-', $variant);
 
 		    	$location;
@@ -141,26 +146,59 @@ class boxAddController extends Controller {
       			$block_date;
       			$unblock_date;
       			$coment;
-      			$reason;
+      			$reason; //?
+      			$module;
+      			$flash;
 
       			// Nav
 
-      			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Due Date]
+      			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Due Date],[Cutting Prod_ Line]
 						  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order]
 						  WHERE [No_] = :somevariable"
 				), array(
 					'somevariable' => $po
 				));
 
+				$fr = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
+						substring(PO.[ORDER_NAME],1,14) as Komesa,
+						substring (PO.[ORDER_NAME],charindex(':',[ORDER_NAME],18)+2, charindex('=',[ORDER_NAME])-(charindex(':',[ORDER_NAME],18)+2) ) as Size,
+					    DLV.[DEL_DATE]
+					FROM [FR_Gordon].[dbo].[_ORDERS] as PO 
+					left join   
+					  (SELECT [ORDER_ID]
+					      ,[DEL_DATE]
+					      ,[ORIG_DEL_DATE]
+					      ,sum([DEL_QTY]) as qty, [EXTN_DEL_DATE]
+					  FROM [FR_Gordon].[dbo].[_ORDER_DELIVERIES]
+					  group by [ORDER_ID]
+					      ,[DEL_DATE]
+					      ,[ORIG_DEL_DATE], [EXTN_DEL_DATE]) as DLV on DLV.[ORDER_ID] = PO.[ORDER_ID] 
+						left join 
+					      (SELECT  [PRODUCT_ID],
+									substring([PRODUCT_NAME],1,charindex(' ',[PRODUCT_NAME])) as Style,
+									substring([PRODUCT_NAME],charindex(' ',[PRODUCT_NAME]),charindex('=',[PRODUCT_NAME])-charindex(' ',[PRODUCT_NAME])) as [Variant Code],
+									[DESCRIPTION]
+					      FROM [FR_Gordon].[dbo].[_PRODUCTS]
+						  where charindex('=',[PRODUCT_NAME]) is not null  and [DESCRIPTION] <> '' and len([PRODUCT_NAME]) > 15) as PRO on PRO.[PRODUCT_ID] = PO.[PRODUCT_ID]
+					where substring(PO.[ORDER_NAME],1,14) = :somevariable and charindex(' ',[ORDER_NAME]) = 0
+					group by substring(PO.[ORDER_NAME],1,14),DLV.[DEL_DATE],PO.[ORDER_NAME]
+				"), array('somevariable' => $po));
+
+				// dd($fr);
+				// dd($fr[0]->DEL_DATE);
+
+			
+
 				$navision_array = object_to_array($navision);
 
 				$po_due_date = $navision_array[0]['Due Date'];
-
+				$flash = $navision_array[0]['Cutting Prod_ Line'];
 
 				$cbarray = array(
 				'cartonbox' => $cartonbox,
 				'cartonbox_date' => $cartonbox_date,
 				'po' => $po,
+				'flash' => $flash,
 				'po_status' => $po_status,
 				'style' => $style,
 				'size' => $size,
@@ -168,7 +206,8 @@ class boxAddController extends Controller {
 				'colordesc' => $colordesc,
 				'qty' => $qty,
 				'standard_qty' => $standard_qty,
-				'po_due_date' => $po_due_date
+				'po_due_date' => $fr[0]->DEL_DATE,
+				'module' => $module
 				);
 				// dd($cbarray);
 
@@ -368,6 +407,8 @@ class boxAddController extends Controller {
 
 				$table->coment = $coment;
 				$table->reason = $reason;
+				$table->module = $box['module'];
+				$table->flash = $box['flash'];
 
 				$table->status = $status;
 				$table->block_date = date("Y-m-d H:i:s");
@@ -392,6 +433,11 @@ class boxAddController extends Controller {
 			return view('Add.error',compact('msg'));
 
 		} else {
+
+			if ($box['flash'] != '') {
+				$msg = "This production order is FLASH !!!";
+				return view('Add.warrning',compact('msg'));
+			}
 			return Redirect::to('/');	
 		}
 

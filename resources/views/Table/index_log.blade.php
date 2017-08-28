@@ -10,8 +10,9 @@
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
                 </div>
-
                 <table class="table table-striped table-bordered" id="sort" 
+                data-show-export="true"
+                data-export-types="['excel']"
                 >
                 <!--
                 data-show-export="true"
@@ -39,8 +40,10 @@
 				        <tr>
 				           {{-- <th>id</th> --}}
 				           <th>Cartonbox</th>
+				           <th>Module</th>
 				           <th>Cartonbox date</th>
 				           <th>Po</th>
+				           <th>Flash</th>
 				           <th>Po Due Date</th>
 				           <th>Style</th>
 				           <th>Color</th>
@@ -66,8 +69,10 @@
 				        <tr>
 				        	{{-- <td>{{ $d->id }}</td> --}}
 				        	<td>{{ $d->cartonbox }}</td>
+				        	<td>{{ $d->module }}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->cartonbox_date)->format('d.m.Y H:i:s') }}</td>
 				        	<td>{{ $d->po }}</td>
+				        	<td>{{ $d->flash}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->po_due_date)->format('d.m.Y') }}</td>
 				        	<td>{{ $d->style }}</td>
 				        	<td>{{ $d->color }}</td>

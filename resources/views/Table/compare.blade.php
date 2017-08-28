@@ -38,12 +38,12 @@
 				    <thead>
 				        <tr>
 				           
-				           <th>Cartonbox</th>
-				           <th>SKU</th>
-				           <th>Sticker</th>
-				           <th>Box on Shipment <p><span style="color: #b3b3b3;font-weight: normal;font: 5px;font-style: italic;">("Palet" <> 1 AND "Mark for shipment" = NO)</span></p></th>
-				           <th>Box shiped</th>
-				           <th>Palet in Nav</th>
+				           <th data-sortable="true">Cartonbox</th>
+				           <th data-sortable="true">SKU</th>
+				           <th data-sortable="true">Sticker</th>
+				           <th data-sortable="true">Box on Shipment <p><span style="color: #b3b3b3;font-weight: normal;font: 5px;font-style: italic;">("Palet" <> 1 AND "Mark for shipment" = NO)</span></p></th>
+				           <th data-sortable="true">Box shiped</th>
+				           <th data-sortable="true">Palet in Nav</th>
 				           
 				        </tr>
 				    </thead>
@@ -54,7 +54,7 @@
 				        <tr>
 				        	
 				        	<td>{{ $box['cartonbox'] }}</td>
-				        	<td>{{ $box['sku'] }}</td>
+				        	<td data-sortable="true">{{ $box['sku'] }}</td>
 				        	<td><span style="color:{{ $box['sticker_color'] }}">{{ $box['sticker'] }}</span></td>
 				        	@if ($box['shipment'] == "YES")
 				        	<td><span style="color:red !important;font-weight: bold">{{ $box['shipment'] }}</span></td>
