@@ -41,6 +41,9 @@ class CreateCbLogsTable extends Migration {
 			$table->string('coment', 64)->nullable();
 			$table->string('reason', 64)->nullable(); 
 
+			// $table->string('flash')->nullable();
+			// $table->string('flag')->nullable();
+
 			$table->timestamps();
 		});
 	}

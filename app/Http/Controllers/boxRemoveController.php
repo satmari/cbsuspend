@@ -155,6 +155,7 @@ class boxRemoveController extends Controller {
 				$table->reason = $cb->reason;
 				$table->module = $cb->module;
 				$table->flash = $cb->flash;
+				$table->flag = $cb->flag;
 
 				$table->status = $status;
 				$table->block_date = $cb->block_date;

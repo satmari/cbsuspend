@@ -151,10 +151,35 @@ class boxAddController extends Controller {
       			$flash;
 
       			// Nav
-
+      			/*
       			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Due Date],[Cutting Prod_ Line]
 						  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order]
 						  WHERE [No_] = :somevariable"
+					), array(
+						'somevariable' => $po
+				));
+				*/
+
+      			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [No_],
+			          case when [Status] = 2 then 'Firm Planned' 
+	                  when [Status] = 3 then 'Released' 
+	                  when [Status] = 4 then 'Finished'
+	                  else convert(varchar(15), [Status]) end as [Status]
+				      ,[To be finished]
+				      ,[To Be Consumned]
+				      ,[Cutting Prod_ Line]
+				      ,[Due Date]
+					      
+					  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] as PO left join
+					  (SELECT [Document No_]
+					      ,sum([PfsOrder Quantity]) as [OrderQuantity], sum([Originally Ordered Qty Calz]) as [Originally Order Qty Clz]
+					      ,[PfsBrand] as [Brand]
+					  FROM [Gordon_LIVE].[dbo].[GORDON\$Sales Line]
+					  where  [Quality Code] = '' and [Line No_] like '1000%'
+					  group by [Document No_],[PfsBrand]) as SL on SL.[Document No_] = PO.[No_]
+								  
+					  where [No_] = :somevariable"
+						 
 				), array(
 					'somevariable' => $po
 				));
@@ -193,12 +218,28 @@ class boxAddController extends Controller {
 
 				$po_due_date = $navision_array[0]['Due Date'];
 				$flash = $navision_array[0]['Cutting Prod_ Line'];
+				
+				if ($navision_array[0]['To be finished'] == 1) {
+					$tbf = "To be fin";
+				} else {
+					$tbf = "";
+				}
+
+				if ($navision_array[0]['To Be Consumned'] == 1) {
+					$tbc = "To be con";
+				} else {
+					$tbc = "";
+				}
+
+				$flag = $tbf." ".$tbc;
+
 
 				$cbarray = array(
 				'cartonbox' => $cartonbox,
 				'cartonbox_date' => $cartonbox_date,
 				'po' => $po,
 				'flash' => $flash,
+				'flag' => $flag,
 				'po_status' => $po_status,
 				'style' => $style,
 				'size' => $size,
@@ -409,6 +450,7 @@ class boxAddController extends Controller {
 				$table->reason = $reason;
 				$table->module = $box['module'];
 				$table->flash = $box['flash'];
+				$table->flag = $box['flag'];
 
 				$table->status = $status;
 				$table->block_date = date("Y-m-d H:i:s");

@@ -44,6 +44,7 @@
 				           <th>Cartonbox date</th>
 				           <th>Po</th>
 				           <th>Flash</th>
+				           <th>Flag</th>
 				           <th>Po Due Date</th>
 				           <th data-sortable="true">Day diff</th>
 				           <th>Style</th>
@@ -73,6 +74,7 @@
 				        	<td>{{ Carbon\Carbon::parse($d->cartonbox_date)->format('d.m.Y H:i:s') }}</td>
 				        	<td>{{ $d->po }}</td>
 				        	<td>{{ $d->flash}}</td>
+				        	<td>{{ $d->flag}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->po_due_date)->format('d.m.Y') }}</td>
 				        	<td data-sortable="true">{{ Carbon\Carbon::parse($d->po_due_date)->diffForHumans(Carbon\Carbon::now()) }}</td>
 				        	<td>{{ $d->style }}</td>
