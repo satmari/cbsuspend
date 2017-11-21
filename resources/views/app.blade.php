@@ -70,6 +70,8 @@
 							<li><a href="{{ url('/scanbox_p') }}">Change box palet</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="{{ url('/add_palet_location') }}">Change location of palet</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="{{ url('/update') }}">Update Flash, Flag and PO Status</a></li>
 
 						</ul>
 					</li>

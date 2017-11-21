@@ -43,6 +43,7 @@
 				           <th>Module</th>
 				           <th>Cartonbox date</th>
 				           <th>Po</th>
+				           <th>Po status</th>
 				           <th>Flash</th>
 				           <th>Flag</th>
 				           <th>Po Due Date</th>
@@ -73,6 +74,7 @@
 				        	<td>{{ $d->module}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->cartonbox_date)->format('d.m.Y H:i:s') }}</td>
 				        	<td>{{ $d->po }}</td>
+				        	<td>{{ $d->po_status }}</td>
 				        	<td>{{ $d->flash}}</td>
 				        	<td>{{ $d->flag}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->po_due_date)->format('d.m.Y') }}</td>

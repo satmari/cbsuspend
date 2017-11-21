@@ -43,7 +43,8 @@ class CreateCbLogsTable extends Migration {
 
 			// $table->string('flash')->nullable();
 			// $table->string('flag')->nullable();
-
+			// $table->string('po_status')->nullable();
+			
 			$table->timestamps();
 		});
 	}

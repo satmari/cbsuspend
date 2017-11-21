@@ -84,6 +84,9 @@ Route::get('export', 'boxTableController@export');
 Route::get('compare', 'compareController@index');
 Route::get('compare_p', 'compareController@index_p');
 
+// Update Tables
+Route::get('update', 'UpdateTables@index');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

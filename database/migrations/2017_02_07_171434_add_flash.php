@@ -24,17 +24,26 @@ class AddFlash extends Migration {
   //   		$table->string('flash')->nullable();
 		// });
 
-		Schema::table('cb_suspend', function($table)
-		{
-    		$table->string('flag')->nullable();
-		});
+		// Schema::table('cb_suspend', function($table)
+		// {
+  //   		$table->string('flag')->nullable();
+		// });
 
 
-		Schema::table('cb_log', function($table)
-		{
-    		$table->string('flag')->nullable();
-		});
+		// Schema::table('cb_log', function($table)
+		// {
+  //   		$table->string('flag')->nullable();
+		// });
 
+		// Schema::table('cb_suspend', function($table)
+		// {
+  //   		$table->string('po_status')->nullable();
+		// });
+
+		// Schema::table('cb_log', function($table)
+		// {
+  //   		$table->string('po_status')->nullable();
+		// });		
 		
 	}
 

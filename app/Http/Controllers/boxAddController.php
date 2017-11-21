@@ -139,18 +139,7 @@ class boxAddController extends Controller {
 
 		    	list($color, $size) = explode('-', $variant);
 
-		    	$location;
-		    	$sticker;
-            	$palet; //?
-      			$status;
-      			$block_date;
-      			$unblock_date;
-      			$coment;
-      			$reason; //?
-      			$module;
-      			$flash;
-
-      			// Nav
+		    	// Nav
       			/*
       			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Due Date],[Cutting Prod_ Line]
 						  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order]
@@ -212,12 +201,11 @@ class boxAddController extends Controller {
 				// dd($fr);
 				// dd($fr[0]->DEL_DATE);
 
-			
-
 				$navision_array = object_to_array($navision);
 
 				$po_due_date = $navision_array[0]['Due Date'];
 				$flash = $navision_array[0]['Cutting Prod_ Line'];
+				$po_status = $navision_array[0]['Status'];
 				
 				if ($navision_array[0]['To be finished'] == 1) {
 					$tbf = "To be fin";
@@ -432,7 +420,7 @@ class boxAddController extends Controller {
 				$table->cartonbox = $box['cartonbox'];
 				$table->cartonbox_date = $box['cartonbox_date'];
 				$table->po = $box['po'];
-				// $table->po_status = $box['po_status'];
+				
 				$table->style = $box['style'];
 				$table->size = $box['size'];
 				$table->color = $box['color'];
@@ -451,6 +439,8 @@ class boxAddController extends Controller {
 				$table->module = $box['module'];
 				$table->flash = $box['flash'];
 				$table->flag = $box['flag'];
+
+				$table->po_status = $box['po_status'];
 
 				$table->status = $status;
 				$table->block_date = date("Y-m-d H:i:s");

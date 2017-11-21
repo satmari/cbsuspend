@@ -137,7 +137,6 @@ class boxRemoveController extends Controller {
 				$table->cartonbox = $cb->cartonbox;
 				$table->cartonbox_date = $cb->cartonbox_date;
 				$table->po = $cb->po;
-				// $table->po_status = $cb->po_status;
 				$table->style = $cb->style;
 				$table->size = $cb->size;
 				$table->color = $cb->color;
@@ -156,6 +155,8 @@ class boxRemoveController extends Controller {
 				$table->module = $cb->module;
 				$table->flash = $cb->flash;
 				$table->flag = $cb->flag;
+
+				$table->po_status = $cb->po_status;
 
 				$table->status = $status;
 				$table->block_date = $cb->block_date;
