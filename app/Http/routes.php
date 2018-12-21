@@ -87,6 +87,9 @@ Route::get('compare_p', 'compareController@index_p');
 // Update Tables
 Route::get('update', 'UpdateTables@index');
 
+Route::get('/import', 'importController@postImportpalet');
+Route::post('/postImportpalet', 'importController@postImportpalet');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -74,7 +74,8 @@ class boxAddController extends Controller {
 				st.StyCod,
 				sku.Variant,
 				sku.ClrDesc,
-				m.ModNam
+				m.ModNam,
+				wh.BoxQuant as whQty
 
 				FROM            dbo.CNF_CartonBox AS cb 
 				LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
@@ -82,6 +83,7 @@ class boxAddController extends Controller {
 				LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
 				LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
 				LEFT OUTER JOIN dbo.CNF_Modules AS m ON cb.Module = m.Module
+				LEFT OUTER JOIN dbo.CNF_WareHouse AS wh ON cb.BoxNum = wh.BoxNum
 				
 				WHERE			cb.BoxNum = :somevariable
 
@@ -94,7 +96,8 @@ class boxAddController extends Controller {
 								st.StyCod,
 								sku.Variant,
 								sku.ClrDesc,
-								m.ModNam"
+								m.ModNam,
+								wh.BoxQuant"
 				), array(
 					'somevariable' => $cbcode
 			));
@@ -133,11 +136,27 @@ class boxAddController extends Controller {
 		    	$colordesc = $inteos_array[0]['ClrDesc'];
 
 		    	$qty = $inteos_array[0]['Produced'];
+		    	$wh_qty = $inteos_array[0]['whQty'];
+
 		    	$standard_qty = $inteos_array[0]['BoxQuant']; // ?
 
 		    	$module = $inteos_array[0]['ModNam'];
 
-		    	list($color, $size) = explode('-', $variant);
+		    	// list($color, $size) = explode('-', $variant);
+
+				$brlinija = substr_count($variant,"-");
+							// echo $brlinija." ";
+
+				if ($brlinija == 2)
+				{
+					list($color, $size1, $size2) = explode('-', $variant);
+					$size = $size1."-".$size2;
+					// echo $color." ".$size;	
+				} else {
+					list($color, $size) = explode('-', $variant);
+					// echo $color." ".$size;
+				}
+
 
 		    	// Nav
       			/*
@@ -233,7 +252,7 @@ class boxAddController extends Controller {
 				'size' => $size,
 				'color' => $color,
 				'colordesc' => $colordesc,
-				'qty' => $qty,
+				'qty' => $wh_qty,
 				'standard_qty' => $standard_qty,
 				'po_due_date' => $fr[0]->DEL_DATE,
 				'module' => $module
