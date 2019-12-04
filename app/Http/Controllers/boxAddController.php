@@ -194,7 +194,7 @@ class boxAddController extends Controller {
 
 				$fr = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
 						substring(PO.[ORDER_NAME],1,14) as Komesa,
-						substring (PO.[ORDER_NAME],charindex(':',[ORDER_NAME],18)+2, charindex('=',[ORDER_NAME])-(charindex(':',[ORDER_NAME],18)+2) ) as Size,
+						--substring (PO.[ORDER_NAME],charindex(':',[ORDER_NAME],18)+2, charindex('=',[ORDER_NAME])-(charindex(':',[ORDER_NAME],18)+2) ) as Size,
 					    DLV.[DEL_DATE]
 					FROM [FR_Gordon].[dbo].[_ORDERS] as PO 
 					left join   
@@ -240,6 +240,10 @@ class boxAddController extends Controller {
 
 				$flag = $tbf." ".$tbc;
 
+				if (!isset($fr[0]->DEL_DATE)) {
+					$po_due_date = '1900-01-01';
+				}
+				
 
 				$cbarray = array(
 				'cartonbox' => $cartonbox,
@@ -254,7 +258,7 @@ class boxAddController extends Controller {
 				'colordesc' => $colordesc,
 				'qty' => $wh_qty,
 				'standard_qty' => $standard_qty,
-				'po_due_date' => $fr[0]->DEL_DATE,
+				'po_due_date' => $po_due_date,
 				'module' => $module
 				);
 				// dd($cbarray);

@@ -40,7 +40,7 @@
 				        <tr>
 				           {{-- <th>id</th> --}}
 				           <th>Cartonbox</th>
-				           <th>Module</th>
+				           <th data-sortable="true">Module</th>
 				           <th>Cartonbox date</th>
 				           <th>Po</th>
 				           <th>Po status</th>
@@ -48,7 +48,7 @@
 				           <th>Flag</th>
 				           <th>Po Due Date</th>
 				           <th data-sortable="true">Day diff</th>
-				           <th>Style</th>
+				           <th data-sortable="true">Style</th>
 				           <th>Color</th>
 				           <th>Color Desc</th>
 				           <th>Size</th>

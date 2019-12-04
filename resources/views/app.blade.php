@@ -71,7 +71,7 @@
 							<li role="separator" class="divider"></li>
 							<li><a href="{{ url('/add_palet_location') }}">Change location of palet</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="{{ url('/update') }}">Update Flash, Flag and PO Status</a></li>
+							<li><a href="{{ url('/update') }}">Update Flash,Flag,PO Status, Due date</a></li>
 
 						</ul>
 					</li>

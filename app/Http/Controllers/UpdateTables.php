@@ -72,7 +72,8 @@ class UpdateTables extends Controller {
 
 			$flash = $navision_array[0]['Cutting Prod_ Line'];
 			$po_status = $navision_array[0]['Status'];
-			// dd($flash);
+			$due_date = $navision_array[0]['Due Date'];
+			// dd($due_date);
 				
 			if ($navision_array[0]['To be finished'] == 1) {
 				$tbf = "To be fin";
@@ -95,6 +96,7 @@ class UpdateTables extends Controller {
 				$table->flash = $flash;
 				$table->flag = $flag;
 				$table->po_status = $po_status;
+				$table->po_due_date = $due_date;
 
 
 				$table->save();
