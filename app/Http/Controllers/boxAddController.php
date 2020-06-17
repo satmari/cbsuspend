@@ -64,43 +64,106 @@ class boxAddController extends Controller {
 
 		if ($cbcode) {
 
-			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
-				cb.BoxNum,
-				cb.Produced,
-				cb.EDITDATE,
-				po.POnum,
-				po.BoxQuant,
-				po.POClosed,
-				st.StyCod,
-				sku.Variant,
-				sku.ClrDesc,
-				m.ModNam,
-				wh.BoxQuant as whQty
+			if (substr($cbcode, 0, 2) == '70') {
 
-				FROM            dbo.CNF_CartonBox AS cb 
-				LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
-				LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
-				LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
-				LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
-				LEFT OUTER JOIN dbo.CNF_Modules AS m ON cb.Module = m.Module
-				LEFT OUTER JOIN dbo.CNF_WareHouse AS wh ON cb.BoxNum = wh.BoxNum
+				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
+					cb.BoxNum,
+					cb.Produced,
+					cb.EDITDATE,
+					po.POnum,
+					po.BoxQuant,
+					po.POClosed,
+					st.StyCod,
+					sku.Variant,
+					sku.ClrDesc,
+					m.ModNam,
+					wh.BoxQuant as whQty
+
+					FROM            dbo.CNF_CartonBox AS cb 
+					LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
+					LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
+					LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+					LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
+					LEFT OUTER JOIN dbo.CNF_Modules AS m ON cb.Module = m.Module
+					LEFT OUTER JOIN dbo.CNF_WareHouse AS wh ON cb.BoxNum = wh.BoxNum
+					
+					WHERE			cb.BoxNum = :somevariable
+
+					GROUP BY		cb.BoxNum,
+									cb.Produced,
+									cb.EDITDATE,
+									po.POnum,
+									po.BoxQuant,
+									po.POClosed,
+									st.StyCod,
+									sku.Variant,
+									sku.ClrDesc,
+									m.ModNam,
+									wh.BoxQuant"
+					), array(
+						'somevariable' => $cbcode
+				));
+
 				
-				WHERE			cb.BoxNum = :somevariable
+				if ($inteos) {
+					//continue
+				    
+				} else {
+					$msg = 'Cartonbox not exist on in Gordon Inteos';
+				}
 
-				GROUP BY		cb.BoxNum,
-								cb.Produced,
-								cb.EDITDATE,
-								po.POnum,
-								po.BoxQuant,
-								po.POClosed,
-								st.StyCod,
-								sku.Variant,
-								sku.ClrDesc,
-								m.ModNam,
-								wh.BoxQuant"
-				), array(
-					'somevariable' => $cbcode
-			));
+			} elseif (substr($cbcode, 0, 2) == '71') {
+
+				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT 
+					cb.BoxNum,
+					cb.Produced,
+					cb.EDITDATE,
+					po.POnum,
+					po.BoxQuant,
+					po.POClosed,
+					st.StyCod,
+					sku.Variant,
+					sku.ClrDesc,
+					m.ModNam,
+					wh.BoxQuant as whQty
+
+					FROM            dbo.CNF_CartonBox AS cb 
+					LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
+					LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
+					LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+					LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
+					LEFT OUTER JOIN dbo.CNF_Modules AS m ON cb.Module = m.Module
+					LEFT OUTER JOIN dbo.CNF_WareHouse AS wh ON cb.BoxNum = wh.BoxNum
+					
+					WHERE			cb.BoxNum = :somevariable
+
+					GROUP BY		cb.BoxNum,
+									cb.Produced,
+									cb.EDITDATE,
+									po.POnum,
+									po.BoxQuant,
+									po.POClosed,
+									st.StyCod,
+									sku.Variant,
+									sku.ClrDesc,
+									m.ModNam,
+									wh.BoxQuant"
+					), array(
+						'somevariable' => $cbcode
+				));
+
+				
+				if ($inteos) {
+					// dd($inteos);
+				    
+				} else {
+					$msg = 'Cartonbox not exist on in Kikinda Inteos';
+				}
+
+			
+			} else {
+				$msg = 'Cartonbox not compatible in any Inteos';
+			}
 
 			
 			if (empty($inteos)) {
@@ -157,6 +220,7 @@ class boxAddController extends Controller {
 					// echo $color." ".$size;
 				}
 
+				// dd($color);
 
 		    	// Nav
       			/*
@@ -191,6 +255,7 @@ class boxAddController extends Controller {
 				), array(
 					'somevariable' => $po
 				));
+				// dd($navision);
 
 				$fr = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
 						substring(PO.[ORDER_NAME],1,14) as Komesa,
@@ -221,7 +286,7 @@ class boxAddController extends Controller {
 				// dd($fr[0]->DEL_DATE);
 
 				$navision_array = object_to_array($navision);
-
+				
 				$po_due_date = $navision_array[0]['Due Date'];
 				$flash = $navision_array[0]['Cutting Prod_ Line'];
 				$po_status = $navision_array[0]['Status'];
