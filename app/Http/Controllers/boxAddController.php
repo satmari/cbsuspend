@@ -64,7 +64,7 @@ class boxAddController extends Controller {
 
 		if ($cbcode) {
 
-			if (substr($cbcode, 0, 2) == '70') {
+			if ((substr($cbcode, 0, 2) == '70') OR (substr($cbcode, 0, 2) == '84')) {
 
 				$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
 					cb.BoxNum,
@@ -112,7 +112,7 @@ class boxAddController extends Controller {
 					$msg = 'Cartonbox not exist on in Gordon Inteos';
 				}
 
-			} elseif (substr($cbcode, 0, 2) == '71') {
+			} elseif ((substr($cbcode, 0, 2) == '71') OR (substr($cbcode, 0, 2) == '85')) {
 
 				$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT 
 					cb.BoxNum,
@@ -192,6 +192,8 @@ class boxAddController extends Controller {
 		    	$cartonbox_date = $inteos_array[0]['EDITDATE'];
 		    	$po = $inteos_array[0]['POnum'];
 
+		  //   	
+
 		    	$po_status = $inteos_array[0]['POClosed']; // ?
 		    	
 		    	$style = $inteos_array[0]['StyCod'];
@@ -223,91 +225,125 @@ class boxAddController extends Controller {
 				// dd($color);
 
 		    	// Nav
-      			/*
-      			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Due Date],[Cutting Prod_ Line]
-						  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order]
-						  WHERE [No_] = :somevariable"
-					), array(
-						'somevariable' => $po
-				));
-				*/
-
-      			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [No_],
-			          case when [Status] = 2 then 'Firm Planned' 
-	                  when [Status] = 3 then 'Released' 
-	                  when [Status] = 4 then 'Finished'
-	                  else convert(varchar(15), [Status]) end as [Status]
-				      ,[To be finished]
-				      ,[To Be Consumned]
-				      ,[Cutting Prod_ Line]
-				      ,[Due Date]
+      			
+    //   			$navision = DB::connection('sqlsrv3')->select(DB::raw("SELECT [No_],
+			 //          case when [Status] = 2 then 'Firm Planned' 
+	   //                when [Status] = 3 then 'Released' 
+	   //                when [Status] = 4 then 'Finished'
+	   //                else convert(varchar(15), [Status]) end as [Status]
+				//       ,[To be finished]
+				//       ,[To Be Consumned]
+				//       ,[Cutting Prod_ Line]
+				//       ,[Due Date]
 					      
-					  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] as PO left join
-					  (SELECT [Document No_]
-					      ,sum([PfsOrder Quantity]) as [OrderQuantity], sum([Originally Ordered Qty Calz]) as [Originally Order Qty Clz]
-					      ,[PfsBrand] as [Brand]
-					  FROM [Gordon_LIVE].[dbo].[GORDON\$Sales Line]
-					  where  [Quality Code] = '' and [Line No_] like '1000%'
-					  group by [Document No_],[PfsBrand]) as SL on SL.[Document No_] = PO.[No_]
+				// 	  FROM [Gordon_LIVE].[dbo].[GORDON\$Production Order] as PO left join
+				// 	  (SELECT [Document No_]
+				// 	      ,sum([PfsOrder Quantity]) as [OrderQuantity], sum([Originally Ordered Qty Calz]) as [Originally Order Qty Clz]
+				// 	      ,[PfsBrand] as [Brand]
+				// 	  FROM [Gordon_LIVE].[dbo].[GORDON\$Sales Line]
+				// 	  where  [Quality Code] = '' and [Line No_] like '1000%'
+				// 	  group by [Document No_],[PfsBrand]) as SL on SL.[Document No_] = PO.[No_]
 								  
-					  where [No_] = :somevariable"
+				// 	  where [No_] = :somevariable"
 						 
-				), array(
-					'somevariable' => $po
-				));
+				// ), array(
+				// 	'somevariable' => $po
+				// ));
 				// dd($navision);
 
-				$fr = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
-						substring(PO.[ORDER_NAME],1,14) as Komesa,
-						--substring (PO.[ORDER_NAME],charindex(':',[ORDER_NAME],18)+2, charindex('=',[ORDER_NAME])-(charindex(':',[ORDER_NAME],18)+2) ) as Size,
-					    DLV.[DEL_DATE]
-					FROM [FR_Gordon].[dbo].[_ORDERS] as PO 
-					left join   
-					  (SELECT [ORDER_ID]
-					      ,[DEL_DATE]
-					      ,[ORIG_DEL_DATE]
-					      ,sum([DEL_QTY]) as qty, [EXTN_DEL_DATE]
-					  FROM [FR_Gordon].[dbo].[_ORDER_DELIVERIES]
-					  group by [ORDER_ID]
-					      ,[DEL_DATE]
-					      ,[ORIG_DEL_DATE], [EXTN_DEL_DATE]) as DLV on DLV.[ORDER_ID] = PO.[ORDER_ID] 
-						left join 
-					      (SELECT  [PRODUCT_ID],
-									substring([PRODUCT_NAME],1,charindex(' ',[PRODUCT_NAME])) as Style,
-									substring([PRODUCT_NAME],charindex(' ',[PRODUCT_NAME]),charindex('=',[PRODUCT_NAME])-charindex(' ',[PRODUCT_NAME])) as [Variant Code],
-									[DESCRIPTION]
-					      FROM [FR_Gordon].[dbo].[_PRODUCTS]
-						  where charindex('=',[PRODUCT_NAME]) is not null  and [DESCRIPTION] <> '' and len([PRODUCT_NAME]) > 15) as PRO on PRO.[PRODUCT_ID] = PO.[PRODUCT_ID]
-					where substring(PO.[ORDER_NAME],1,14) = :somevariable and charindex(' ',[ORDER_NAME]) = 0
-					group by substring(PO.[ORDER_NAME],1,14),DLV.[DEL_DATE],PO.[ORDER_NAME]
-				"), array('somevariable' => $po));
+
+				// $fr = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
+				// 		substring(PO.[ORDER_NAME],1,14) as Komesa,
+				// 		--substring (PO.[ORDER_NAME],charindex(':',[ORDER_NAME],18)+2, charindex('=',[ORDER_NAME])-(charindex(':',[ORDER_NAME],18)+2) ) as Size,
+				// 	    DLV.[DEL_DATE]
+				// 	FROM [FR_Gordon].[dbo].[_ORDERS] as PO 
+				// 	left join   
+				// 	  (SELECT [ORDER_ID]
+				// 	      ,[DEL_DATE]
+				// 	      ,[ORIG_DEL_DATE]
+				// 	      ,sum([DEL_QTY]) as qty, [EXTN_DEL_DATE]
+				// 	  FROM [FR_Gordon].[dbo].[_ORDER_DELIVERIES]
+				// 	  group by [ORDER_ID]
+				// 	      ,[DEL_DATE]
+				// 	      ,[ORIG_DEL_DATE], [EXTN_DEL_DATE]) as DLV on DLV.[ORDER_ID] = PO.[ORDER_ID] 
+				// 		left join 
+				// 	      (SELECT  [PRODUCT_ID],
+				// 					substring([PRODUCT_NAME],1,charindex(' ',[PRODUCT_NAME])) as Style,
+				// 					substring([PRODUCT_NAME],charindex(' ',[PRODUCT_NAME]),charindex('=',[PRODUCT_NAME])-charindex(' ',[PRODUCT_NAME])) as [Variant Code],
+				// 					[DESCRIPTION]
+				// 	      FROM [FR_Gordon].[dbo].[_PRODUCTS]
+				// 		  where charindex('=',[PRODUCT_NAME]) is not null  and [DESCRIPTION] <> '' and len([PRODUCT_NAME]) > 15) as PRO on PRO.[PRODUCT_ID] = PO.[PRODUCT_ID]
+				// 	where substring(PO.[ORDER_NAME],1,14) = :somevariable and charindex(' ',[ORDER_NAME]) = 0
+				// 	group by substring(PO.[ORDER_NAME],1,14),DLV.[DEL_DATE],PO.[ORDER_NAME]
+				// "), array('somevariable' => $po));
+
+				// dd($po);
+				$brcrtica = substr_count($po,"-");
+		    	if ($brcrtica == 1)
+				{
+					$po_search = $po;
+				} else {
+					$po_search = substr($po, -9, 9);
+					
+				}
+				// dd($po);
+
+				$posummary = DB::connection('sqlsrv6')->select(DB::raw("SELECT * FROM pro WHERE pro = '".$po_search."' AND size = '".$size."' "));
+				// dd($posummary);
+
+				if (isset($posummary[0]->id)) {
+
+					$po_due_date = $posummary[0]->delivery_date_orig;
+					$flash = $posummary[0]->segment;
+					$po_status = $posummary[0]->status_int;
+					$flag = $posummary[0]->flash;
+				} else {
+					$po_due_date = '1900-01-01';
+					$flash = 'no info';
+					$po_status = 'no_info';
+					$flag = 'no info';
+				}	
 
 				// dd($fr);
 				// dd($fr[0]->DEL_DATE);
 
-				$navision_array = object_to_array($navision);
+				// if (!isset($fr[0]->DEL_DATE)) {
+				// 	$po_due_date = '1900-01-01';
+				// }
+
+				// $navision_array = object_to_array($navision);
 				
-				$po_due_date = $navision_array[0]['Due Date'];
-				$flash = $navision_array[0]['Cutting Prod_ Line'];
-				$po_status = $navision_array[0]['Status'];
+				// $po_due_date = $navision_array[0]['Due Date'];
+				// $po_due_date = '';
+				// $flash = $navision_array[0]['Cutting Prod_ Line'];
+				// $flash = '';
+				// $po_status = $navision_array[0]['Status'];
+				// $po_status = '';
 				
-				if ($navision_array[0]['To be finished'] == 1) {
-					$tbf = "To be fin";
-				} else {
-					$tbf = "";
-				}
+				// if ($navision_array[0]['To be finished'] == 1) {
+				// 	$tbf = "To be fin";
+				// } else {
+				// 	$tbf = "";
+				// }
+				// $tbf = '';
 
-				if ($navision_array[0]['To Be Consumned'] == 1) {
-					$tbc = "To be con";
-				} else {
-					$tbc = "";
-				}
+				// if ($navision_array[0]['To Be Consumned'] == 1) {
+				// 	$tbc = "To be con";
+				// } else {
+				// 	$tbc = "";
+				// }
+				// $tbc = '';
 
-				$flag = $tbf." ".$tbc;
+				// $flag = $tbf." ".$tbc;
 
-				if (!isset($fr[0]->DEL_DATE)) {
-					$po_due_date = '1900-01-01';
-				}
+				// $sap = 0;
+				// if ($sap == 1){
+				// 	$flash = 'no info';
+				// 	$po_status = 'no_info';
+				// 	$flag = 'no info';
+				// }
+
+				
 				
 
 				$cbarray = array(
@@ -497,7 +533,6 @@ class boxAddController extends Controller {
 		// dd($sticker_color);
 
 		$status = 'BLOCK';
-		
 		$msg = "";
 		
 		foreach ($cb_to_add_array as $box) {
@@ -515,7 +550,8 @@ class boxAddController extends Controller {
 				$table->colordesc = $box['colordesc'];
 				$table->qty = $box['qty'];
 				// $table->standard_qty = $box['standard_qty'];
-				$table->po_due_date = $box['po_due_date'];
+				// dd($box['po_due_date']);
+				$table->po_due_date = $box['po_due_date'];  //0
 				
 				$table->sticker = $sticker;
 				$table->sticker_color = $sticker_color;
@@ -537,7 +573,7 @@ class boxAddController extends Controller {
 			}
 			catch (\Illuminate\Database\QueryException $e) {
 				$msg =  $msg.$box['cartonbox']." ";
-				// return view('Add.error',compact('msg'));
+				return view('Add.error',compact('msg'));
 			}
 		}
 
@@ -554,7 +590,7 @@ class boxAddController extends Controller {
 
 		} else {
 
-			if ($box['flash'] != '') {
+			if ($box['flash'] == 'EUF') {
 				$msg = "This production order is FLASH !!!";
 				return view('Add.warrning',compact('msg'));
 			}

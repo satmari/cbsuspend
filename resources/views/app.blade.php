@@ -77,9 +77,9 @@
 					</li>
 
 					@endif
-
+<!-- 
 					<li><a href="{{ url('compare') }}">Compare</a></li>
-					<li><a href="{{ url('compare_p') }}">Compare (only problematic)</a></li>
+					<li><a href="{{ url('compare_p') }}">Compare (only problematic)</a></li> -->
 				
 				</ul>
 				
