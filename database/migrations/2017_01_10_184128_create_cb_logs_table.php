@@ -23,6 +23,8 @@ class CreateCbLogsTable extends Migration {
 			$table->string('color', 12);
 			$table->string('colordesc', 64);
 			$table->string('size', 8);
+			
+			$table->string('sku')->nullable();
 
 			$table->dateTime('po_due_date');
 

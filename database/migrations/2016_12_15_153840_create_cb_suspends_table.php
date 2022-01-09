@@ -24,6 +24,8 @@ class CreateCbSuspendsTable extends Migration {
 			$table->string('colordesc', 64);
 			$table->string('size', 8);
 
+			$table->string('sku')->nullable();
+
 			$table->dateTime('po_due_date');
 
 			$table->integer('qty')->nullable();

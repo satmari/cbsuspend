@@ -48,10 +48,8 @@
 				           <th>Flag</th>
 				           <th>Po Due Date</th>
 				           <th data-sortable="true">Day diff</th>
-				           <th data-sortable="true">Style</th>
-				           <th>Color</th>
+				           <th data-sortable="true">SKU</th>
 				           <th>Color Desc</th>
-				           <th>Size</th>
 				           <th>Qty</th>
 				           <th>Sticker</th>
 				           <th>Palet</th>
@@ -79,10 +77,8 @@
 				        	<td>{{ $d->flag}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->po_due_date)->format('d.m.Y') }}</td>
 				        	<td data-sortable="true">{{ Carbon\Carbon::parse($d->po_due_date)->diffForHumans(Carbon\Carbon::now()) }}</td>
-				        	<td>{{ $d->style }}</td>
-				        	<td>{{ $d->color }}</td>
+				        	<td><pre>{{ $d->sku }}</pre></td>
 				        	<td>{{ $d->colordesc }}</td>
-				        	<td>{{ $d->size }}</td>
 				        	<td>{{ $d->qty }}</td>
 				        	<td><span style="color:{{ $d->sticker_color }};
 				        		text-shadow:   -0.5px -0.5px 0 #000,  

@@ -42,7 +42,11 @@ class AddFlash extends Migration {
 
 		// Schema::table('cb_log', function($table)
 		// {
-  //   		$table->string('po_status')->nullable();
+  //   		$table->string('sku')->nullable();
+		// });		
+		// Schema::table('cb_suspend', function($table)
+		// {
+  //   		$table->string('sku')->nullable();
 		// });		
 		
 	}

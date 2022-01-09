@@ -504,7 +504,7 @@ class boxAddController extends Controller {
 		$coment = Session::get('coment');
 		$reason = Session::get('reason');
 		// var_dump($coment);
-
+		// dd('test');
 
 		if (is_null(Session::get('cb_to_add_array'))){
 			
@@ -535,8 +535,16 @@ class boxAddController extends Controller {
 		$status = 'BLOCK';
 		$msg = "";
 		
+		
 		foreach ($cb_to_add_array as $box) {
 			// dd($box['cartonbox']);
+			
+			$style_sap = str_pad($box['style'], 9); 
+			$color_sap = str_pad($box['color'], 4);
+			$size_sap = str_pad($box['size'], 5);
+			
+			$sku = $style_sap.$color_sap.$size_sap;
+
 			try {
 				$table = new cbSuspend;
 
@@ -547,6 +555,7 @@ class boxAddController extends Controller {
 				$table->style = $box['style'];
 				$table->size = $box['size'];
 				$table->color = $box['color'];
+				$table->sku = $sku;
 				$table->colordesc = $box['colordesc'];
 				$table->qty = $box['qty'];
 				// $table->standard_qty = $box['standard_qty'];
