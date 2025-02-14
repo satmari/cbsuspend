@@ -18,7 +18,7 @@
 				<div class="panel-body">
 				<p>Reason: </p>
 				    {{-- {!! Form::text('reason', null, ['class' => 'form-control']) !!} --}}
-					{!! Form::select('reason', array(''=>'','first cartoon box'=>'first cartoon box','shading color'=>'shading color','measurement out of tollerance'=>'measurement out of tollerance','contamination/fabric problem'=>'contamination/fabric problem','twisted (leg, sleeve...)'=>'twisted (leg, sleeve...)','different thread color'=>'different thread color'), '', array('class' => 'form-control')); !!} 
+					{!! Form::select('reason', array(''=>'','first cartoon box'=>'first cartoon box','shading color'=>'shading color','measurement out of tollerance'=>'measurement out of tollerance','contamination/fabric problem'=>'contamination/fabric problem','twisted (leg, sleeve...)'=>'twisted (leg, sleeve...)','different thread color'=>'different thread color', 'intimissimi – first 5 boxes from module' => 'intimissimi – first 5 boxes from module'), '', array('class' => 'form-control')); !!} 
 				</div>
 				
 				<div class="panel-body">

@@ -16,7 +16,7 @@ class PaletsController extends Controller {
 	public function index()
 	{
 		//
-		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM palets ORDER BY palet"));
+		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT * FROM palets ORDER BY id"));
 		return view('Palets.index', compact('data'));
 	}
 

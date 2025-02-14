@@ -6,12 +6,13 @@
 		<div class="text-center">
 			<div class="panel panel-default">
 				<div class="panel-heading">Suspend table</div>
-				<a href="{{ url('/export') }}" class="btn btn-info btn-s">Export in CSV</a>
+				{{--<a href="{{ url('/export') }}" class="btn btn-info btn-s">Export in CSV</a> --}}
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
                 </div>
-
                 <table class="table table-striped table-bordered" id="sort" 
+                data-show-export="true"
+                data-export-types="['excel']"
                 >
                 <!--
                 data-show-export="true"
@@ -39,14 +40,16 @@
 				        <tr>
 				           {{-- <th>id</th> --}}
 				           <th>Cartonbox</th>
+				           <th data-sortable="true">Module</th>
 				           <th>Cartonbox date</th>
 				           <th>Po</th>
+				           <th>Po status</th>
+				           <th>Flash</th>
+				           <th>Flag</th>
 				           <th>Po Due Date</th>
 				           <th data-sortable="true">Day diff</th>
-				           <th>Style</th>
-				           <th>Color</th>
+				           <th data-sortable="true">SKU</th>
 				           <th>Color Desc</th>
-				           <th>Size</th>
 				           <th>Qty</th>
 				           <th>Sticker</th>
 				           <th>Palet</th>
@@ -57,7 +60,6 @@
 				           <th>Comment</th>
 				           <th>Reason</th>
 				           <th></th>
-
 				        </tr>
 				    </thead>
 				    <tbody class="searchable">
@@ -67,14 +69,16 @@
 				        <tr>
 				        	{{-- <td>{{ $d->id }}</td> --}}
 				        	<td>{{ $d->cartonbox }}</td>
+				        	<td>{{ $d->module}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->cartonbox_date)->format('d.m.Y H:i:s') }}</td>
 				        	<td>{{ $d->po }}</td>
+				        	<td>{{ $d->po_status }}</td>
+				        	<td>{{ $d->flash}}</td>
+				        	<td>{{ $d->flag}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->po_due_date)->format('d.m.Y') }}</td>
 				        	<td data-sortable="true">{{ Carbon\Carbon::parse($d->po_due_date)->diffForHumans(Carbon\Carbon::now()) }}</td>
-				        	<td>{{ $d->style }}</td>
-				        	<td>{{ $d->color }}</td>
+				        	<td><pre>{{ $d->sku }}</pre></td>
 				        	<td>{{ $d->colordesc }}</td>
-				        	<td>{{ $d->size }}</td>
 				        	<td>{{ $d->qty }}</td>
 				        	<td><span style="color:{{ $d->sticker_color }};
 				        		text-shadow:   -0.5px -0.5px 0 #000,  
@@ -89,9 +93,11 @@
 				        	<td>{{ substr($d->unblock_date, 0, 19) }} </td>
 				        	<td>{{ $d->coment }} </td>
 				        	<td>{{ $d->reason }} </td>
+				        	<td>
 				        	@if(Auth::check())
-				        	  	<td><a href="{{ url('edit_coment/'.$d->id) }}" class="btn btn-info btn-xs center-block">Edit</a></td>
+				        	  	<a href="{{ url('edit_coment/'.$d->id) }}" class="btn btn-info btn-xs center-block">Edit</a>
 				        	@endif
+				        	</td>
 						</tr>
 				    
 				    @endforeach

@@ -32,11 +32,6 @@ class compareController extends Controller {
 				  FROM [Gordon_LIVE].[dbo].[GORDON\$Box Scanning]
 				  WHERE [Marked For Shipment] = 0 AND [Pallet Number] != '1'
 				  AND [Box Barcode] = '".$box->cartonbox."'"));
-
-			/*$compare = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Box Barcode] as box
-				  FROM [Gordon_LIVE].[dbo].[GORDON\$Box Scanning]
-				  WHERE [Box Barcode] = '".$box->cartonbox."'")); */
-
 			// dd($compare);
 
 			if ($compare) {

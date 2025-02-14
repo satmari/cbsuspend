@@ -100,7 +100,7 @@ class boxTableController extends Controller {
 				$table->save();
 			}
 			catch (\Illuminate\Database\QueryException $e) {
-				$msg = "Problem to change reson in table";
+				$msg = "Problem to change reason in table";
 				return view('Table.error',compact('msg'));
 			}
 			

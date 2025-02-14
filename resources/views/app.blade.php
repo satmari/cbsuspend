@@ -28,14 +28,14 @@
 <body>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="{{ url('/') }}">CB Suspend appliaction</a>
+			<div class="navbar-header"> 
+				<a class="navbar-brand" href="{{ url('/') }}">CB Suspend application</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
-
+					
 					<li>
 						 <button class="btn btn-default dropdown-toggle" style="margin: 8px 5px !important;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 								    Tables
@@ -70,14 +70,16 @@
 							<li><a href="{{ url('/scanbox_p') }}">Change box palet</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="{{ url('/add_palet_location') }}">Change location of palet</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="{{ url('/update') }}">Update Flash,Flag,PO Status, Due date</a></li>
 
 						</ul>
 					</li>
 
 					@endif
-
+<!-- 
 					<li><a href="{{ url('compare') }}">Compare</a></li>
-					<li><a href="{{ url('compare_p') }}">Compare (only problematic)</a></li>
+					<li><a href="{{ url('compare_p') }}">Compare (only problematic)</a></li> -->
 				
 				</ul>
 				

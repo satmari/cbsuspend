@@ -10,8 +10,9 @@
                 <div class="input-group"> <span class="input-group-addon">Filter</span>
                     <input id="filter" type="text" class="form-control" placeholder="Type here...">
                 </div>
-
                 <table class="table table-striped table-bordered" id="sort" 
+                data-show-export="true"
+                data-export-types="['excel']"
                 >
                 <!--
                 data-show-export="true"
@@ -39,13 +40,15 @@
 				        <tr>
 				           {{-- <th>id</th> --}}
 				           <th>Cartonbox</th>
+				           <th>Module</th>
 				           <th>Cartonbox date</th>
 				           <th>Po</th>
+				           <th>Po status</th>
+				           <th>Flash</th>
+				           <th>Flag</th>
 				           <th>Po Due Date</th>
-				           <th>Style</th>
-				           <th>Color</th>
+				           <th>SKU</th>
 				           <th>Color Desc</th>
-				           <th>Size</th>
 				           <th>Qty</th>
 				           <th>Sticker</th>
 				           <th>Palet</th>
@@ -66,13 +69,15 @@
 				        <tr>
 				        	{{-- <td>{{ $d->id }}</td> --}}
 				        	<td>{{ $d->cartonbox }}</td>
+				        	<td>{{ $d->module }}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->cartonbox_date)->format('d.m.Y H:i:s') }}</td>
 				        	<td>{{ $d->po }}</td>
+				        	<td>{{ $d->po_status }}</td>
+				        	<td>{{ $d->flash}}</td>
+				        	<td>{{ $d->flag}}</td>
 				        	<td>{{ Carbon\Carbon::parse($d->po_due_date)->format('d.m.Y') }}</td>
-				        	<td>{{ $d->style }}</td>
-				        	<td>{{ $d->color }}</td>
+				        	<td><pre>{{ $d->sku }}</pre></td>
 				        	<td>{{ $d->colordesc }}</td>
-				        	<td>{{ $d->size }}</td>
 				        	<td>{{ $d->qty }}</td>
 				        	<td><span style="color:{{ $d->sticker_color }};
 				        		text-shadow:   -0.5px -0.5px 0 #000,  

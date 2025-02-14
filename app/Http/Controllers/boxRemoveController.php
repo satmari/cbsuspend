@@ -130,6 +130,11 @@ class boxRemoveController extends Controller {
 
 			$cb = cbSuspend::findOrFail($box['id']);
 			// dd($cb->id);
+
+			$style_sap = str_pad($cb->style, 9); 
+			$color_sap = str_pad($cb->color, 4);
+			$size_sap = str_pad($cb->size, 5);
+			$sku = $style_sap.$color_sap.$size_sap;
 			
 			try {
 				$table = new cbLog;
@@ -137,10 +142,10 @@ class boxRemoveController extends Controller {
 				$table->cartonbox = $cb->cartonbox;
 				$table->cartonbox_date = $cb->cartonbox_date;
 				$table->po = $cb->po;
-				// $table->po_status = $cb->po_status;
 				$table->style = $cb->style;
 				$table->size = $cb->size;
 				$table->color = $cb->color;
+				$table->sku = $sku;
 				$table->colordesc = $cb->colordesc;
 				$table->qty = $cb->qty;
 				// $table->standard_qty = $cb->standard_qty;
@@ -152,6 +157,12 @@ class boxRemoveController extends Controller {
 				$table->palet_id = $cb->palet_id;
 
 				$table->coment = $cb->coment;
+				$table->reason = $cb->reason;
+				$table->module = $cb->module;
+				$table->flash = $cb->flash;
+				$table->flag = $cb->flag;
+
+				$table->po_status = $cb->po_status;
 
 				$table->status = $status;
 				$table->block_date = $cb->block_date;
