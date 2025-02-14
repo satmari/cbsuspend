@@ -28,7 +28,7 @@
 <body>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<div class="navbar-header">
+			<div class="navbar-header"> 
 				<a class="navbar-brand" href="{{ url('/') }}">CB Suspend application</a>
 			</div>
 
