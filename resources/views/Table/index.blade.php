@@ -54,6 +54,7 @@
 				           <th>Sticker</th>
 				           <th>Palet</th>
 				           <th>Location</th>
+				           <th>Dest</th>
 				           <th>Status</th>
 				           <th>Block date</th>
 				           <th>Unblock date</th>
@@ -87,6 +88,7 @@
 				        					    0.5px 0.5px 0 #000;">{{ $d->sticker }}</span></td>
     					    <td>{{ $d->palet }}</td>
 				        	<td>{{ $d->location }}</td>
+				        	<td>{{ $d->dest }}</td>
 				        	<td>{{ $d->status }}</td>
 				        	<td>{{ substr($d->block_date, 0, 19) }} </td>
 				        	{{--<td>{{ Carbon\Carbon::parse($d->block_date)}}</td> --}}

@@ -545,7 +545,7 @@ class boxAddController extends Controller {
 			
 			$sku = $style_sap.$color_sap.$size_sap;
 
-			try {
+			// try {
 				$table = new cbSuspend;
 
 				$table->cartonbox = $box['cartonbox'];
@@ -579,11 +579,11 @@ class boxAddController extends Controller {
 				$table->block_date = date("Y-m-d H:i:s");
 
 				$table->save();
-			}
-			catch (\Illuminate\Database\QueryException $e) {
-				$msg =  $msg.$box['cartonbox']." ";
-				return view('Add.error',compact('msg'));
-			}
+			// }
+			// catch (\Illuminate\Database\QueryException $e) {
+			// 	$msg =  $msg.$box['cartonbox']." ";
+			// 	return view('Add.error',compact('msg'));
+			// }
 		}
 
 		Session::set('cb_to_add_array', null);

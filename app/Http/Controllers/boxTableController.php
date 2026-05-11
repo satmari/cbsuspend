@@ -28,7 +28,8 @@ class boxTableController extends Controller {
 		
 		$data = DB::connection('sqlsrv')->select(DB::raw("SELECT cb.*,
 					(SELECT palet FROM palets WHERE id = cb.palet_id) as palet,
-					(SELECT location FROM palets WHERE id = cb.palet_id) as location
+					(SELECT location FROM palets WHERE id = cb.palet_id) as location,
+					(SELECT location_desc FROM palets WHERE id = cb.palet_id) as dest
 			FROM cb_suspend as cb ORDER BY palet_id asc"));
 		return view('Table.index', compact('data'));
 	}
